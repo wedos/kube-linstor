@@ -28,6 +28,16 @@ spec:
         - --rest-bind={{ .Values.controller.restApiBindAddress }}:{{ .Values.controller.restApiBindPort }}
         image: {{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag }}
         imagePullPolicy: {{ .Values.controller.image.pullPolicy }}
+        startupProbe:
+          exec:
+            command:
+            - timeout
+            - "5"
+            - linstor
+            - controller
+            - list-properties
+          failureThreshold: 30
+          periodSeconds: 10
         livenessProbe:
           exec:
             command:
@@ -36,7 +46,6 @@ spec:
             - linstor
             - controller
             - list-properties
-          initialDelaySeconds: 60
           periodSeconds: 10
         name: linstor-controller
         volumeMounts:

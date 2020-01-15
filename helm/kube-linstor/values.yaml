@@ -159,6 +159,8 @@ operator:
     pullSecrets:
       - name: regsecret
 
+  workers: 10
+
   # nodeSelector:
   #   node-role.kubernetes.io/master: ""
   
